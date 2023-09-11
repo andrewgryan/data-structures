@@ -17,7 +17,7 @@ function insert(node, value) {
   if (node === null) return Node(value);
   if (value < node.value) {
     node.left = insert(node.left, value);
-  } else {
+  } else if (value > node.value) {
     node.right = insert(node.right, value);
   }
   return node;
@@ -77,10 +77,13 @@ function summary(node) {
 }
 
 /// Executable code
-let node = insertMany(Node(42), [43, 44, 45, 46]);
+let node = insertMany(Node(42), [41, 43, 44, 45, 46]);
 
 summary(node);
 node = leftRotate(node);
 summary(node);
 node.right = leftRotate(node.right);
 summary(node);
+
+// Duplicate insert
+summary(insert(Node(42), 42))
