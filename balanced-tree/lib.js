@@ -49,6 +49,20 @@ function leftRotate(node) {
   return pivot;
 }
 
+function rightRotate(node) {
+  let root = node;
+  let pivot = node.left;
+  root.left = pivot.right;
+  pivot.right = root;
+  return pivot;
+}
+
+function rightLeftRotate(node) {
+  let child = node.right;
+  node.right = rightRotate(child);
+  return leftRotate(node);
+}
+
 function postOrder(node, indent, fn) {
   if (node !== null) {
     // Format
@@ -86,4 +100,17 @@ node.right = leftRotate(node.right);
 summary(node);
 
 // Duplicate insert
-summary(insert(Node(42), 42))
+summary(insert(Node(42), 42));
+
+// Right rotate test
+let right = insertMany(Node(5), [4, 3, 2, 1]);
+summary(right);
+right = rightRotate(right);
+summary(right);
+
+// Right left rotate scenario
+console.log("-- Right left rotate --");
+let rightLeft = insertMany(Node(10), [20, 19, 18]);
+summary(rightLeft);
+rightLeft = rightLeftRotate(rightLeft);
+summary(rightLeft);
