@@ -7,9 +7,9 @@ function Node(value) {
 }
 
 function insertMany(node, values) {
-  for (let i = 0; i < values.length; i++) {
-    node = insert(node, values[i]);
-  }
+  values.forEach((value) => {
+    node = insert(node, value);
+  });
   return node;
 }
 
@@ -71,20 +71,16 @@ function postOrder(node, indent, fn) {
 }
 
 function summary(node) {
-console.log({height: height(node),
-             balance_factor: balance_factor(node)});
-postOrder(node, 0, (n) => n.value);
-postOrder(node, 0, balance_factor);
-  
+  console.log({ height: height(node), balance_factor: balance_factor(node) });
+  postOrder(node, 0, (n) => n.value);
+  postOrder(node, 0, balance_factor);
 }
 
 /// Executable code
 let node = insertMany(Node(42), [43, 44, 45, 46]);
 
-
-summary(node)
+summary(node);
 node = leftRotate(node);
-summary(node)
+summary(node);
 node.right = leftRotate(node.right);
-summary(node)
-
+summary(node);
