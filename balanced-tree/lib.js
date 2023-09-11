@@ -63,6 +63,12 @@ function rightLeftRotate(node) {
   return leftRotate(node);
 }
 
+function leftRightRotate(node) {
+  let child = node.left;
+  node.left = leftRotate(child);
+  return rightRotate(node);
+}
+
 function postOrder(node, indent, fn) {
   if (node !== null) {
     // Format
@@ -114,3 +120,10 @@ let rightLeft = insertMany(Node(10), [20, 19, 18]);
 summary(rightLeft);
 rightLeft = rightLeftRotate(rightLeft);
 summary(rightLeft);
+
+// Left right rotate scenario
+console.log("-- Left right rotate --");
+let leftRight = insertMany(Node(30), [20, 21, 22]);
+summary(leftRight);
+leftRight = leftRightRotate(leftRight);
+summary(leftRight);
