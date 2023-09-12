@@ -40,6 +40,8 @@ function insert(node, value) {
  *  @returns {BinaryNode} new search tree
  */
 function balancedInsert(node, value) {
+  // TODO: Balance the tree as an insert takes place
+  // TODO: Print retracing balanceFactors
   return insert(node, value)
 }
 
@@ -70,7 +72,7 @@ function isLeaf(node) {
 /**
  *  @param {BinaryNode} node
  */
-function balance_factor(node) {
+function balanceFactor(node) {
   return height(node.left) - height(node.right);
 }
 
@@ -152,9 +154,9 @@ function postOrder(node, indent, fn) {
  *  @param {BinaryNode} node
  */
 export function summary(node) {
-  console.log({ height: height(node), balance_factor: balance_factor(node) });
+  console.log({ height: height(node), balance_factor: balanceFactor(node) });
   postOrder(node, 0, (n) => n.value);
-  postOrder(node, 0, balance_factor);
+  postOrder(node, 0, balanceFactor);
 }
 
 /**
@@ -181,4 +183,20 @@ export function bst(root, ...data) {
 export function avl(root, ...data) {
   // TODO: implement automatic balancing
   return data.reduce(balancedInsert, BinaryNode(root))
+}
+
+/**
+ * @param {BinaryNode} tree
+ * @param {number} value
+ * @returns {boolean} binary search tree
+ */
+export function search(tree, value) {
+  if (value > tree.value) {
+    if (tree.right === null) return false
+    return search(tree.right, value)
+  } else if (value < tree.value) {
+    if (tree.left === null) return false
+    return search(tree.left, value)
+  }
+  return true
 }
