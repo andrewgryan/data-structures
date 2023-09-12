@@ -20,17 +20,6 @@ function BinaryNode(value) {
 }
 
 /**
- *  @param {BinaryNode} node
- *  @param {number[]} values
- */
-function insertMany(node, values) {
-  values.forEach((value) => {
-    node = insert(node, value);
-  });
-  return node;
-}
-
-/**
  *  @param {BinaryNode | null} node
  *  @param {number} value
  *  @returns {BinaryNode} new search tree
@@ -172,7 +161,7 @@ export function show(node) {
  * @returns {BinaryNode} binary search tree
  */
 export function bst(root, ...data) {
-  return insertMany(BinaryNode(root), data)
+  return data.reduce(insert, BinaryNode(root))
 }
 
 /**
@@ -182,5 +171,5 @@ export function bst(root, ...data) {
  */
 export function avl(root, ...data) {
   // TODO: implement automatic balancing
-  return insertMany(BinaryNode(root), data)
+  return data.reduce(insert, BinaryNode(root))
 }
