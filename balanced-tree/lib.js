@@ -35,6 +35,15 @@ function insert(node, value) {
 }
 
 /**
+ *  @param {BinaryNode | null} node
+ *  @param {number} value
+ *  @returns {BinaryNode} new search tree
+ */
+function balancedInsert(node, value) {
+  return insert(node, value)
+}
+
+/**
  *  @param {BinaryNode | null} tree
  */
 function height(tree) {
@@ -171,5 +180,5 @@ export function bst(root, ...data) {
  */
 export function avl(root, ...data) {
   // TODO: implement automatic balancing
-  return data.reduce(insert, BinaryNode(root))
+  return data.reduce(balancedInsert, BinaryNode(root))
 }
