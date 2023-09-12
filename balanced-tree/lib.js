@@ -80,7 +80,7 @@ function balance_factor(node) {
  *  @param {BinaryNode} node
  *  @returns {BinaryNode}
  */
-function leftRotate(node) {
+export function leftRotate(node) {
   let root = node;
   let pivot = node.right;
   if (pivot === null) return root
@@ -93,7 +93,7 @@ function leftRotate(node) {
  *  @param {BinaryNode} node
  *  @returns {BinaryNode}
  */
-function rightRotate(node) {
+export function rightRotate(node) {
   let root = node;
   let pivot = node.left;
   if (pivot === null) return root
@@ -106,7 +106,7 @@ function rightRotate(node) {
  *  @param {BinaryNode} node
  *  @returns {BinaryNode}
  */
-function rightLeftRotate(node) {
+export function rightLeftRotate(node) {
   let child = node.right;
   if (child === null) return node
   node.right = rightRotate(child);
@@ -117,7 +117,7 @@ function rightLeftRotate(node) {
  *  @param {BinaryNode} node
  *  @returns {BinaryNode}
  */
-function leftRightRotate(node) {
+export function leftRightRotate(node) {
   let child = node.left;
   if (child === null) return node
   node.left = leftRotate(child);
@@ -153,7 +153,7 @@ function postOrder(node, indent, fn) {
 /**
  *  @param {BinaryNode} node
  */
-function summary(node) {
+export function summary(node) {
   console.log({ height: height(node), balance_factor: balance_factor(node) });
   postOrder(node, 0, (n) => n.value);
   postOrder(node, 0, balance_factor);
@@ -164,40 +164,6 @@ function summary(node) {
  * @param {number[]} data
  * @returns {BinaryNode} binary search tree
  */
-function bst(root, ...data) {
+export function bst(root, ...data) {
   return insertMany(BinaryNode(root), data)
 }
-
-/// Executable code
-let node = bst(42, 41, 43, 44, 45, 46);
-
-summary(node);
-node = leftRotate(node);
-summary(node);
-if (node.right !== null) {
-  node.right = leftRotate(node.right);
-  summary(node);
-}
-
-// Duplicate insert
-summary(bst(42, 42));
-
-// Right rotate test
-let right = bst(5, 4, 3, 2, 1);
-summary(right);
-right = rightRotate(right);
-summary(right);
-
-// Right left rotate scenario
-console.log("-- Right left rotate --");
-let rightLeft = bst(10, 20, 19, 18);
-summary(rightLeft);
-rightLeft = rightLeftRotate(rightLeft);
-summary(rightLeft);
-
-// Left right rotate scenario
-console.log("-- Left right rotate --");
-let leftRight = bst(30, 20, 21, 22);
-summary(leftRight);
-leftRight = leftRightRotate(leftRight);
-summary(leftRight);
