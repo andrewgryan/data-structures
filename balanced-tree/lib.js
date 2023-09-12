@@ -160,10 +160,27 @@ export function summary(node) {
 }
 
 /**
+ *  @param {BinaryNode} node
+ */
+export function show(node) {
+  postOrder(node, 0, (n) => n.value);
+}
+
+/**
  * @param {number} root
  * @param {number[]} data
  * @returns {BinaryNode} binary search tree
  */
 export function bst(root, ...data) {
+  return insertMany(BinaryNode(root), data)
+}
+
+/**
+ * @param {number} root
+ * @param {number[]} data
+ * @returns {BinaryNode} binary search tree
+ */
+export function avl(root, ...data) {
+  // TODO: implement automatic balancing
   return insertMany(BinaryNode(root), data)
 }
