@@ -11,7 +11,7 @@
  *  @param {number} value
  *  @returns {BinaryNode} new search tree
  */
-function BinaryNode(value) {
+export function BinaryNode(value) {
   return {
     value,
     left: null,
@@ -24,14 +24,30 @@ function BinaryNode(value) {
  *  @param {number} value
  *  @returns {BinaryNode} new search tree
  */
-function insert(node, value) {
+export function insertMut(node, value) {
   if (node === null) return BinaryNode(value);
   if (value < node.value) {
-    node.left = insert(node.left, value);
+    node.left = insertMut(node.left, value);
   } else if (value > node.value) {
-    node.right = insert(node.right, value);
+    node.right = insertMut(node.right, value);
   }
   return node;
+}
+
+/**
+ *  @param {BinaryNode | null} node
+ *  @param {number} value
+ *  @returns {BinaryNode} new search tree
+ */
+export function insert(node, value) {
+  if (node === null) return BinaryNode(value);
+  if (value < node.value) {
+    return {...node, left: insert(node.left, value) }
+  } else if (value > node.value) {
+    return {...node, right: insert(node.right, value) }
+  } else {
+    return node
+  }
 }
 
 /**
@@ -42,7 +58,7 @@ function insert(node, value) {
 function balancedInsert(node, value) {
   // TODO: Balance the tree as an insert takes place
   // TODO: Print retracing balanceFactors
-  return insert(node, value)
+  return insertMut(node, value)
 }
 
 /**
@@ -55,6 +71,7 @@ function height(tree) {
 /**
  *  @param {BinaryNode | null} node
  *  @param {number} edges
+ *  @returns {number}
  */
 function _height(node, edges) {
   if (node === null) return edges;
@@ -72,7 +89,7 @@ function isLeaf(node) {
 /**
  *  @param {BinaryNode} node
  */
-function balanceFactor(node) {
+export function balanceFactor(node) {
   return height(node.left) - height(node.right);
 }
 
@@ -199,4 +216,22 @@ export function search(tree, value) {
     return search(tree.left, value)
   }
   return true
+}
+
+/**
+ *  @param {BinaryNode} node
+ *  @returns {BinaryNode} balanced search tree
+ */
+export function balance(node) {
+  if (balanceFactor(node) === -2) {
+    return leftRotate(node)
+  }
+  if (balanceFactor(node) === +2) {
+    let child = node.left
+    if ((child !== null) && (balanceFactor(child) === -1)) {
+      node.left = leftRotate(child)
+    }
+    return rightRotate(node)
+  }
+  return node
 }
